@@ -11,7 +11,13 @@ function (Controller,JSONModel,MessageToast,Filter,FilterOperator) {
     return Controller.extend("standardapp.controller.standardApp", {
         onInit: function () {
 
-  
+            let changedValues = {
+                newOrder : undefined,
+            }
+
+            let changedValuesModel = new JSONModel(changedValues);
+
+            this.getView().setModel(changedValuesModel,'changedValuesModel');
 
         },
         onSearch: function(){
@@ -26,8 +32,10 @@ function (Controller,JSONModel,MessageToast,Filter,FilterOperator) {
                 ;
             });
             this.getView().byId('ordersTable').getBinding("items").filter(customerFilters);
-
-
+        },
+        onOrderChange: function(event){
+            let newOrder = event.getParameter('newValue');
+            this.getView().getModel('changedValuesModel').setProperty('/newOrder',newOrder);
         }
 
 

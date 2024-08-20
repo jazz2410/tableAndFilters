@@ -13,8 +13,15 @@
                         <core:Item id="customerID" key="{CustomerID}" text="{CustomerID}" />
                     </MultiComboBox>
                 </fb:control>
-            
                 </fb:FilterGroupItem>
+
+                <fb:FilterGroupItem id="filterOrder" name="filterOrder" label="Order" groupName="Group1" visibleInFilterBar="true" >
+                    <fb:control>
+                        <Input id="orderfilter" width="400px" change="onOrderChange"></Input>
+                    </fb:control>
+                    </fb:FilterGroupItem>
+
+
             </fb:filterGroupItems>
         </fb:FilterBar>
 
