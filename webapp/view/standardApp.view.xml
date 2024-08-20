@@ -1,7 +1,53 @@
 <mvc:View controllerName="standardapp.controller.standardApp"
     xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
-    xmlns="sap.m">
+    xmlns="sap.m"
+    xmlns:core="sap.ui.core"
+    xmlns:fb="sap.ui.comp.filterbar">
     <Page id="page" title="{i18n>title}">
-        <Input id="test" value="HelloWorld!"></Input>
+
+        <fb:FilterBar id="Filterbar" search="onSearch" persistencyKey="myPersKey">
+            <fb:filterGroupItems>
+                <fb:FilterGroupItem id="filterCustomer" name="filterCustomer" label="Customer" groupName="Group1" visibleInFilterBar="true" >
+                <fb:control>
+                    <MultiComboBox id="multiCombo" items="{path : '/Customers'}">
+                        <core:Item id="customerID" key="{CustomerID}" text="{CustomerID}" />
+                    </MultiComboBox>
+                </fb:control>
+            
+                </fb:FilterGroupItem>
+            </fb:filterGroupItems>
+        </fb:FilterBar>
+
+
+        <Table id="ordersTable" items="{/Orders}">
+            <columns>
+                <Column id="orderIDColumn">
+                    <Label id="orderIDLabel" text="Order"></Label>
+                </Column>
+                <Column id="customerIDColumn">
+                    <Label id="customerIDLabel" text="Customer"></Label>
+                </Column>
+                <Column id="orderdateIDColumn">
+                    <Label id="orderDateLabel" text="Order date"></Label>
+                </Column>
+                <Column id="shipNameColumn">
+                    <Label id="shipNameLabel" text="Ship name"></Label>
+                </Column>
+            </columns>
+
+            <items>
+                <ColumnListItem id="OrderColumn">
+                    <cells>
+                      <Text id="OrderValue" text="{OrderID}" />
+                      <Text id="CustomerValue" text="{CustomerID}" />
+                      <Text id="OrderDateValue" text="{OrderDate}" />
+                      <Text id="ShipNameValue" text="{ShipName}" />
+                    </cells>
+                </ColumnListItem>
+
+            </items>
+
+
+        </Table>
     </Page>
 </mvc:View>
