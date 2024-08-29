@@ -1,60 +1,40 @@
-<mvc:View controllerName="standardapp.controller.standardApp"
-    xmlns:mvc="sap.ui.core.mvc" displayBlock="true"
+<mvc:View
+    controllerName="standardapp.controller.standardApp"
+    xmlns:mvc="sap.ui.core.mvc"
+    displayBlock="true"
     xmlns="sap.m"
     xmlns:core="sap.ui.core"
-    xmlns:fb="sap.ui.comp.filterbar">
-    <Page id="page" title="{i18n>title}">
+    xmlns:f="sap.ui.layout.form"
+>
+    <Page
+        id="page"
+        title="{i18n>title}"
+    >
+        <f:SimpleForm
+            id="deliveryCreateForm"
+            editable="true"
+            layout="ResponsiveGridLayout"
+        >
+            <f:content>
+                <Label
+                    id="ValueLabel"
+                    text="Customer"
+                />
+                <Input
+                    id="ValueInput"
+                    change="onPressChange"
+                    width="200px"
+                    showValueHelp="true"
+                    valueHelpRequest="onValueHelpCustomer"
+                    suggestionItems = "{/Customers}"
+                    showSuggestion="true"
+                >
+                <suggestionItems>
+                    <core:Item id="ValueHelp" key="{CustomerID}" text="{CustomerID}"></core:Item>
+                </suggestionItems>
 
-        <fb:FilterBar id="Filterbar" search="onSearch" persistencyKey="myPersKey">
-            <fb:filterGroupItems>
-                <fb:FilterGroupItem id="filterCustomer" name="filterCustomer" label="Customer" groupName="Group1" visibleInFilterBar="true" >
-                <fb:control>
-                    <MultiComboBox id="multiCombo" items="{path : '/Customers'}">
-                        <core:Item id="customerID" key="{CustomerID}" text="{CustomerID}" />
-                    </MultiComboBox>
-                </fb:control>
-                </fb:FilterGroupItem>
-
-                <fb:FilterGroupItem id="filterOrder" name="filterOrder" label="Order" groupName="Group1" visibleInFilterBar="true" >
-                    <fb:control>
-                        <Input id="orderfilter" width="400px" change="onOrderChange"></Input>
-                    </fb:control>
-                    </fb:FilterGroupItem>
-
-
-            </fb:filterGroupItems>
-        </fb:FilterBar>
-
-
-        <Table id="ordersTable" items="{/Orders}">
-            <columns>
-                <Column id="orderIDColumn">
-                    <Label id="orderIDLabel" text="Order"></Label>
-                </Column>
-                <Column id="customerIDColumn">
-                    <Label id="customerIDLabel" text="Customer"></Label>
-                </Column>
-                <Column id="orderdateIDColumn">
-                    <Label id="orderDateLabel" text="Order date"></Label>
-                </Column>
-                <Column id="shipNameColumn">
-                    <Label id="shipNameLabel" text="Ship name"></Label>
-                </Column>
-            </columns>
-
-            <items>
-                <ColumnListItem id="OrderColumn">
-                    <cells>
-                      <Text id="OrderValue" text="{OrderID}" />
-                      <Text id="CustomerValue" text="{CustomerID}" />
-                      <Text id="OrderDateValue" text="{OrderDate}" />
-                      <Text id="ShipNameValue" text="{ShipName}" />
-                    </cells>
-                </ColumnListItem>
-
-            </items>
-
-
-        </Table>
+                </Input>
+            </f:content>
+        </f:SimpleForm>
     </Page>
 </mvc:View>

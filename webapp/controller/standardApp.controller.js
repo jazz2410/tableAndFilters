@@ -11,34 +11,32 @@ function (Controller,JSONModel,MessageToast,Filter,FilterOperator) {
     return Controller.extend("standardapp.controller.standardApp", {
         onInit: function () {
 
-            let changedValues = {
-                newOrder : undefined,
+        },
+        onValueHelpCustomer: function(oEvent){
+            var sInputValue = oEvent.getSource().getValue()
+
+            if(!this._oDialog){
+                this._oDialog = sap.ui.xmlfragment(this.getView().getId(),"standardapp.view.CustomerValueHelp", this);
+                this.getView().addDependent(this._oDialog);
             }
 
-            let changedValuesModel = new JSONModel(changedValues);
-
-            this.getView().setModel(changedValuesModel,'changedValuesModel');
-
+            this._oDialog.getBinding("items").filter([new Filter("CustomerID", FilterOperator.Contains, sInputValue)]);
+            this._oDialog.open();
         },
-        onSearch: function(){
-            
-            var customerKeys = this.byId('filterCustomer').getControl().getSelectedKeys();
-            var customerFilters = customerKeys.map(function(selectedKey){
-                    return new Filter({
-                        path : 'CustomerID',
-                        operator: FilterOperator.Contains,
-                        value1 : selectedKey
-                    });                
-                ;
-            });
-            this.getView().byId('ordersTable').getBinding("items").filter(customerFilters);
+        onValueHelpSearch: function(oEvent){
+            var sValue = oEvent.getParameter("value");
+			var oFilter = new Filter("CustomerID", FilterOperator.Contains, sValue);
+			oEvent.getSource().getBinding("items").filter([oFilter]);
         },
-        onOrderChange: function(event){
-            let newOrder = event.getParameter('newValue');
-            this.getView().getModel('changedValuesModel').setProperty('/newOrder',newOrder);
-        }
+        onValueHelpClose: function(oEvent){
+            var oSelectedItem = oEvent.getParameter("selectedItem");
+			oEvent.getSource().getBinding("items").filter([]);
 
+			if (!oSelectedItem) {
+				return;
+			}
 
-
+			this.byId("ValueInput").setValue(oSelectedItem.getTitle());
+        },
     });
 });
